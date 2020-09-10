@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block title %}create | 共研{% endblock %}
+
+{% block content %}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'database/create/css/create.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'database/create/css/chosen.css' %}">
+
+<a href="/database/create">基本資料</a>
+<a href="/database/create_pi">PI</a>
+<a href="/database/create_staff">助理</a>
+<a href="/database/create_card">門禁卡</a>
+<hr>
+
+<h1>新增人員</h1>
+<form method="post">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <input type="submit" value="新增" />
+  <input type="button" value="取消" onclick="history.back()" />
+</form>
+
+<script type="text/javascript" src="{% static 'database/browse/js/jquery-3.3.1.js' %}"></script>
+<!-- Chosen v1.8.2 -->
+<script type="text/javascript" src="{% static 'database/create/js/chosen.jquery.mini.js' %}"></script>
+<script>
+	$( "select" ).chosen();
+</script>
+
+
+{% endblock %}

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+
+<html lang="en" dir="ltr">
+  <head>
+    {% load static %}
+
+    <meta charset="utf-8">
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="icon" href="{% static "img/favicon.png" %}" type="image/x-icon" />
+
+    <!-- css of browse -->
+    <link rel="stylesheet" type="text/css" href="{% static 'database/browse/css/table.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'database/browse/css/dataTables.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'database/browse/css/dataTablesButtons.css' %}">
+    
+    <!-- js of browse -->
+    <script type="text/javascript" src="{% static 'database/browse/js/jquery-3.3.1.js' %}"></script>
+    <!-- Column filtering -->
+    <script type="text/javascript" src="{% static 'database/browse/js/dataTables.min.js' %}"></script>
+    <!-- Column groups -->
+    <script type="text/javascript" src="{% static 'database/browse/js/dataTables.buttons.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'database/browse/js/buttons.colVis.min.js' %}"></script>
+    <!-- Local file -->
+    <script type="text/javascript" src="{% static 'database/browse/js/table.js' %}"></script>
+    
+
+  </head>
+  <body>
+    <a href="/database">首頁</a>
+    <a href="/database/search">搜尋</a>
+    <a href="/database/browse">瀏覽</a>
+    <a href="/database/create">新增</a>
+    <a href="/database/download">備份</a>
+    <hr>
+
+    {% block content %}
+    {% endblock %}
+
+  </body>
+</html>

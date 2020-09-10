@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+{% block title %}
+detail | 共研
+{% endblock %}
+
+
+{% block content %}
+<form>
+  <input type="button" value="Back" onclick="history.back()">
+  <input type="button" value="Edit" onclick="">
+  <input type="button" value="Delete" onclick="">
+</form>
+
+<h1>{{detail_people.name}}</h1>
+<h2>剩餘卡數 : {{remaining_cards}}</h2>
+
+<h2>助理及信箱</h2>
+{% for assistant in assistants %}
+  {{assistant.uid}}
+{% endfor %}
+<br><br>
+{% for mail in mails %}
+  {{mail}}<br>
+{% endfor %}
+{{detail_people.mail}}
+<br><br>
+<hr>
+
+<h2>個人資料</h2>
+<p>分機: {{detail_people.extension}}</p>
+<p>手機: {{detail_people.number}}</p>
+<p>簡碼: {{detail_people.phone}}</p>
+<p>主要信箱: {{detail_people.mail}}</p>
+<p>次要信箱: {{detail_people.alt_mail}}</p>
+<p>職稱: {{detail_people.job_title}}</p>
+<p>單位: {{detail_people.organization}}</p>
+<p>員工編號: {{detail_people.employee_ID}}</p>
+<p>Role: {{detail_people.role}}</p>
+
+<hr>
+
+<p>審核通過日: {{detail_PI.pass_date}}</p>
+<p>性質: {{detail_PI.property}}</p>
+<p>連絡窗口: {{detail_PI.contact}}</p>
+<p>使用細胞室: {{detail_PI.culture_room}}</p>
+<p>使用危害性化學品: {{detail_PI.hazardous_chemicals}}</p>
+<p>使用毒化物: {{detail_PI.toxic_chenicals}}</p>
+<p>上年度展延日期: {{detail_PI.pre_extension_date}}</p>
+<p>上年度展延結果: {{detail_PI.pre_extension_result}}</p>
+<p>當年度展延日期: {{detail_PI.extension_date}}</p>
+<p>當年度展延結果: {{detail_PI.extension_result}}</p>
+<p>歸還日: {{detail_PI.return_date}}</p>
+
+<hr>
+
+<p>領卡日期: {{detail_card.receive}}</p>
+<p>收據號碼: {{detail_card.receipt}}</p>
+<p>門禁卡卡號: {{detail_card.card_ID}}</p>
+<p>密碼: {{detail_card.password}}</p>
+<p>退卡日期: {{detail_card.card_return_date}}</p>
+
+
+{% endblock %}

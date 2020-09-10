@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block title %} core lab-staff {% endblock %}
+{% block content %}
+<a href="/browse">Person</a>
+<a href="/pi">PIs</a>
+<a href="/staff">Staffs</a>
+<a href="/card">Cards</a>
+<hr>
+<table>
+  <tr>
+    <td>姓名</td>
+    <td>常駐</td>
+    <td>人事資料卡PI</td>
+    <td>領用門禁卡</td>
+    <td>門禁卡PI</td>
+    <td>細胞室</td>
+    <td>細胞室使用日期</td>
+    <td>細胞室停用日期</td>
+    <td>安衛教育訓練</td>
+    <td>生安教育訓練</td>
+    <td>離職</td>
+  </tr>
+  {% for p in staff_list %}
+  <tr>
+    <td>{{p.uid}}</td>
+    <td>{{p.permanent}}</td>
+    <td>{{p.PI}}</td>
+    <td>{{p.card}}</td>
+    <td>{{p.card_PI}}</td>
+    <td>{{p.culture_room}}</td>
+    <td>{{p.culture_room_start}}</td>
+    <td>{{p.culture_room_end}}</td>
+    <td>{{p.EHS_training}}</td>
+    <td>{{p.security_training}}</td>
+    <td>{{p.leave}}</td>
+  </tr>
+  {% endfor %}
+</table>
+
+{% endblock %}

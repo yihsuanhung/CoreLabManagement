@@ -1,0 +1,207 @@
+{% extends "base.html" %}
+{% block title %}detail | 共研{% endblock %}
+
+{% block content %}
+<!-- <form>
+  <input type="button" value="Back" onclick="history.back()">
+  <input type="button" value="Edit" onclick="">
+  <input type="button" value="Delete" onclick="">
+</form> -->
+
+<a href="javascript:history.back()">返回</a>
+<a href="{{ detail_people.get_delete_url }}">刪除</a>
+
+{% if detail_PI is None %}
+{% if detail_people.role == "PI" %}
+  <a href="/database/create_pi">+ PI 詳細資料</a>
+{% endif %}
+{% endif %}
+
+{% if detail_staff is None %}
+{% if detail_people.role == "Staff" %}
+  <a href="/database/create_staff">+ 助理詳細資料</a>
+{% endif %}
+{% endif %}
+
+{% if detail_card is None %}
+{% if detail_people.access_card == True %}
+  <a href="/database/create_card">+ 門禁卡資料</a>
+{% endif %}
+{% endif %}
+
+
+
+<!-- 姓名 -->
+{% if detail_people.leave == True %}
+  <h1>{{detail_people.name}} (已離職)</h1>
+{% else %}
+  <h1>{{detail_people.name}}</h1>
+{% endif %}
+<hr>
+
+
+<!-- PI重要資料 -->
+{% if detail_PI is not None %}
+
+  <!-- 固定：剩餘卡數 -->
+  {% if detail_PI.property == "固定" %}
+  <h2>剩餘卡數 : {{remaining_cards}} (最多2張)</h2>
+
+  持卡人:
+  <!-- 固定：顯示未離職助理 -->
+  {% for i in card_holder %}
+    {% if i.leave == False %}
+      <a href="{{ i.get_absolute_url }}">{{ i.name }}</a>
+    {% endif %}
+  {% endfor %}
+  <!-- 固定：顯示已離職助理 -->
+  <br>
+  已離職:
+  {% for i in card_holder %}
+    {% if i.leave == True %}
+      <a href="{{ i.get_absolute_url }}">{{ i.name }}</a>
+    {% endif %}
+  {% endfor %}
+
+  <!-- 流動：剩餘卡數 -->
+  {% elif detail_PI.property == "流動" %}
+  <h2>剩餘卡數 : {{remaining_cards}} (最多1張)</h2>
+  持卡人:
+  <!-- 固流：顯示未離職助理 -->
+  {% for i in card_holder %}
+    {% if i.leave == False %}
+      <a href="{{ i.get_absolute_url }}">{{ i.name }}</a>
+    {% endif %}
+  {% endfor %}
+  <!-- 流動：顯示已離職助理 -->
+  <br>
+  已離職:
+  {% for i in card_holder %}
+    {% if i.leave == True %}
+      <a href="{{ i.get_absolute_url }}">{{ i.name }}</a>
+    {% endif %}
+  {% endfor %}
+
+  <!-- 醫研部：剩餘卡數 -->
+  {% elif detail_PI.property == "醫研部" %}
+  <h2>持有卡數 : {{total_cards_dmr}} </h2>
+  持卡人:
+  <!-- 醫研部：顯示未離職助理 -->
+  {% for i in card_holder %}
+    {% if i.leave == False %}
+      <a href="{{ i.get_absolute_url }}">{{ i.name }}</a>
+    {% endif %}
+  {% endfor %}
+  <!-- 醫研部：顯示已離職助理 -->
+  <br>
+  已離職:
+  {% for i in card_holder %}
+    {% if i.leave == True %}
+      <a href="{{ i.get_absolute_url }}">{{ i.name }}</a>
+    {% endif %}
+  {% endfor %}
+  {% endif %}
+
+
+  <hr>
+  {% if assistants is not None %}
+    <h2>助理及信箱</h2>
+    {% for assistant in assistants %}
+      {% if assistant.uid.leave == False%}
+        <a href="{{ assistant.get_absolute_url }}">{{assistant.uid}}</a>
+      {% endif %}
+    {% endfor %}
+    <br>
+    {% for assistant in assistants %}
+      {% if assistant.uid.leave == False%}
+        {{assistant.uid.mail}}<br>
+      {% endif %}
+    {% endfor %}
+    <!-- {% for mail in mails %}
+      {{mail}}<br>
+    {% endfor %} -->
+    {{detail_people.mail}}
+    <br>
+    <hr>
+  {% endif %}
+{% endif %}
+
+
+<!-- 基本資料 -->
+<font size="6"><b>基本資料</b></font>
+<a href="{{ detail_people.get_update_url }}">編輯</a>
+<p><b>分機: </b>{{detail_people.extension}}</p>
+<p><b>簡碼: </b>{{detail_people.number}}</p>
+<p><b>手機: </b>{{detail_people.phone}}</p>
+<p><b>主要信箱: </b>{{detail_people.mail}}</p>
+<p><b>次要信箱: </b>{{detail_people.alt_mail}}</p>
+<p><b>職稱: </b>{{detail_people.job_title}}</p>
+<p><b>單位: </b>{{detail_people.organization}}</p>
+<p><b>員工編號: </b>{{detail_people.employee_ID}}</p>
+<p><b>領用門禁卡: </b>{{detail_people.access_card}}</p>
+<p><b>共研: </b>{{detail_people.core_lab}}</p>
+<p><b>類別: </b>{{detail_people.role}}</p>
+<p><b>離職: </b>{{detail_people.leave}}</p>
+<p><b>備註: </b>{{detail_people.remark}}</p>
+
+<hr>
+
+<!-- PI詳細資料 -->
+{% if detail_PI is not None %}
+  <font size="6"><b>PI 詳細資料</b></font>
+  <a href="{{ detail_PI.get_update_url }}">編輯</a>
+  <p><b>審核通過日: </b>{{detail_PI.pass_date}}</p>
+  <p><b>性質: </b>{{detail_PI.property}}</p>
+  <p><b>連絡窗口: </b><a href="{{ detail_PI.contact.get_absolute_url }}">{{detail_PI.contact}}</a></p>
+  <p><b>細胞室: </b>{{detail_PI.culture_room}}</p>
+  <p><b>危害物: </b>{{detail_PI.hazardous_chemicals}}</p>
+  <p><b>毒化物: </b>{{detail_PI.toxic_chenicals}}</p>
+  <p><b>歸還日: </b>{{detail_PI.return_date}}</p>
+  <p><b>前一年度展延日期: </b>{{detail_PI.pre_extension_date}}</p>
+  <p><b>前一年度展延結果: </b>{{detail_PI.pre_extension_result}}</p>
+  <p><b>當年度展延日期: </b>{{detail_PI.extension_date}}</p>
+  <p><b>當年度展延結果: </b>{{detail_PI.extension_result}}</p>
+  <hr>
+{% endif %}
+
+
+<!-- 助理詳細資料 -->
+{% if detail_staff is not None %}
+  <font size="6"><b>助理詳細資料</b></font>
+  <a href="{{ detail_staff.get_update_url }}">編輯</a>
+  <p><b>人事資料卡PI: </b><a href="{{detail_staff.info.get_absolute_url}}">{{detail_staff.info.uid}}</a></p>
+  <p><b>門禁卡PI: </b><a href="{{detail_staff.card.get_absolute_url}}">{{detail_staff.card.uid}}</a></p>
+  <p><b>細胞室: </b>{{detail_staff.culture_room}}</p>
+  <p><b>細胞室使用日期: </b>{{detail_staff.culture_room_start}}</p>
+  <p><b>細胞室停用日期: </b>{{detail_staff.culture_room_end}}</p>
+  <p><b>共研講習日期: </b>{{detail_staff.EHS_training_date}}</p>
+  <p><b>生安教育訓練日期: </b>{{detail_staff.security_training_date}}</p>
+  <p><b>離職日期: </b>{{detail_staff.leave_date}}</p>
+  <p><b>人事資料卡: </b>{{detail_staff.info_card}}</p>
+  <hr>
+{% endif %}
+
+
+<!-- 門禁卡資料 -->
+{% if detail_card is not None %}
+  <font size="6"><b>門禁卡資料</b></font>
+  <a href="{{ detail_card.get_update_url }}">編輯</a>
+  <p><b>卡號: </b>{{detail_card.card_ID}}</p>
+  <p><b>密碼: </b>{{detail_card.password}}</p>
+  <p><b>身份證: </b>{{detail_card.id_number}}</p>
+  <p><b>內碼: </b>{{detail_card.inner_code}}</p>
+  <p><b>收據號碼: </b>{{detail_card.receipt}}</p>
+  <p><b>序號: </b>{{detail_card.serial}}</p>
+  <p><b>備註: </b>{{detail_card.remark}}</p>
+  <p><b>From: </b>{{detail_card.card_from}}</p>
+  <p><b>To: </b>{{detail_card.card_to}}</p>
+  <p><b>領卡日期: </b>{{detail_card.card_receive}}</p>
+  <p><b>退卡日期: </b>{{detail_card.card_return}}</p>
+  <hr>
+{% endif %}
+
+<p>{{detail_people.uid}}</p>
+
+
+
+{% endblock %}

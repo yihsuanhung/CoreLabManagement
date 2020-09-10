@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block title %}update | 共研{% endblock %}
+
+{% block content %}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'database/update/css/update.css' %}">
+
+<a href="{{ obj_url }}">返回</a>
+
+
+<h1>編輯基本資料</h1>
+<form method="post">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <input type="submit" value="儲存">
+  <input type="button" value="取消" onclick="history.back()">
+</form>
+{% endblock %}

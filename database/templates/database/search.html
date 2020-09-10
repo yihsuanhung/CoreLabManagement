@@ -1,0 +1,180 @@
+{% extends "base.html" %}
+
+{% block title %}search | 共研{% endblock %}
+{% block content %}
+<style media="screen">
+  .search_bar{
+    width:200px; height:25px; border:1px solid #adadad; border-radius:3px; margin-bottom:3px;
+  }
+  .search_button{
+    width:80px; height:29px; border-radius:3px; border:none; color: white; background-color:#4285F4; margin-bottom:3px
+  }
+  .date_bar{
+    width:100px; height:25px; border:1px solid #adadad; border-radius:3px; margin-bottom:3px;
+
+  }
+</style>
+
+
+<form method="GET" action="/database/search" id="search_culture_room">
+  領用門禁卡
+  <input class="radio" type="radio" name="access_card" value=True />是
+  <input class="radio" type="radio" name="access_card" value=False />否<br>
+  使用細胞室
+  <input class="radio" type="radio" name="culture_room" value=True />是
+  <input class="radio" type="radio" name="culture_room" value=False />否<br>
+  使用危害性化學品
+  <input class="radio" type="radio" name="hazardous_chemicals" value=True />是
+  <input class="radio" type="radio" name="hazardous_chemicals" value=False />否<br>
+  使用毒化物
+  <input class="radio" type="radio" name="toxic_chenicals" value=True />是
+  <input class="radio" type="radio" name="toxic_chenicals" value=False />否<br>
+  常駐 (助理)
+  <input class="radio" type="radio" name="permanent" value=True />是
+  <input class="radio" type="radio" name="permanent" value=False />否<br>
+  使用細胞室 (助理)
+  <input class="radio" type="radio" name="culture_room_staff" value=True />是
+  <input class="radio" type="radio" name="culture_room_staff" value=False />否<br>
+  <br>
+  前一年度展延日期
+  <input class="date_bar" type="text" name="time_start" placeholder="Search from"/>
+  <input class="date_bar" type="text" id="time_end" name="time_end" placeholder="to"/>
+  <button type="button" onclick="giveTodayBtn()">今天</button><br>
+  <br>
+  <input class="search_button" type="submit" name="" value="Search"/>
+
+</form>
+
+{% if person_list is not None %}
+<h1>個人資料</h1>
+<table >
+    <tr>
+      <td>姓名</td>
+      <td>分機</td>
+      <td>手機</td>
+      <td>簡碼</td>
+      <td>主要信箱</td>
+      <td>次要信箱</td>
+      <td>職稱</td>
+      <td>單位</td>
+      <td>員工編號</td>
+      <td>領用門禁卡</td>
+      <td>共研</td>
+      <td>Role</td>
+    </tr>
+
+  {% for p in person_list %}
+  <tr>
+    <td><a href="{{ p.get_absolute_url }}">{{p.name}}</a></td>
+    <td>{{p.extension}}</td>
+    <td>{{p.number}}</td>
+    <td>{{p.phone}}</td>
+    <td>{{p.mail}}</td>
+    <td>{{p.alt_mail}}</td>
+    <td>{{p.job_title}}</td>
+    <td>{{p.organization}}</td>
+    <td>{{p.employee_ID}}</td>
+    <td>{{p.access_card}}</td>
+    <td>{{p.core_lab}}</td>
+    <td>{{p.role}}</td>
+    <!--<td>{{p.uid}}</td>-->
+  </tr>
+  {% endfor %}
+</table>
+{% endif %}
+
+
+{% if pi_list is not None %}
+<h1>PI 詳細資料</h1>
+<table >
+  <tr>
+    <td>姓名</td>
+    <td>審核通過日</td>
+    <td>性質</td>
+    <td>連絡窗口</td>
+    <td>使用細胞室</td>
+    <td>使用危害性化學品</td>
+    <td>使用毒化物</td>
+    <td>前一年度展延日期</td>
+    <td>前一年度展延結果</td>
+    <td>當年度展延日期</td>
+    <td>當年度展延結果</td>
+    <td>歸還日</td>
+  </tr>
+
+  {% for pi in pi_list %}
+  <tr>
+    <td><a href="{{ pi.get_absolute_url }}">{{pi.uid}}</a></td>
+    <td>{{pi.pass_date}}</td>
+    <td>{{pi.property}}</td>
+    <td>{{pi.contact}}</td>
+    <td>{{pi.culture_room}}</td>
+    <td>{{pi.hazardous_chemicals}}</td>
+    <td>{{pi.toxic_chenicals}}</td>
+    <td>{{pi.pre_extension_date}}</td>
+    <td>{{pi.pre_extension_result}}</td>
+    <td>{{pi.extension_date}}</td>
+    <td>{{pi.extension_result}}</td>
+    <td>{{pi.return_date}}</td>
+    <td>test</td>
+  </tr>
+  {% endfor %}
+
+</table>
+{% endif %}
+
+
+{% if staff_list is not None %}
+<h1>助理 詳細資料</h1>
+<table >
+  <tr>
+    <td>姓名</td>
+    <td>常駐</td>
+    <td>人事資料卡PI</td>
+    <td>門禁卡PI</td>
+    <td>細胞室</td>
+    <td>細胞室使用日期</td>
+    <td>細胞室停用日期</td>
+    <td>安衛教育訓練</td>
+    <td>生安教育訓練</td>
+    <td>離職</td>
+  </tr>
+
+  {% for staff in staff_list %}
+  <tr>
+    <td><a href="{{ staff.get_absolute_url }}">{{staff.uid}}</a></td>
+    <td>{{staff.permanent}}</td>
+    <td>{{staff.pi}}</td>
+    <td>{{staff.card_pi}}</td>
+    <td>{{staff.culture_room}}</td>
+    <td>{{staff.culture_room_start}}</td>
+    <td>{{staff.culture_room_end}}</td>
+    <td>{{staff.EHS_training}}</td>
+    <td>{{staff.security_training}}</td>
+    <td>{{staff.leave}}</td>
+  </tr>
+  {% endfor %}
+
+</table>
+{% endif %}
+
+
+{% if person_list is not None %}
+<h1>信箱</h1>
+<table>
+  {% for mail in person_list%}
+  <tr>
+    <td>{{mail.mail}}</td>
+  </tr>
+  {% endfor %}
+</table>
+{% endif %}
+
+
+<script>
+  function giveTodayBtn(){
+    document.getElementById('time_end').value= '{{date}}'
+  }
+</script>
+
+{% endblock %}

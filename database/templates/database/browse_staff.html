@@ -1,0 +1,111 @@
+{% extends "base.html" %}
+
+{% block title %}browse | 共研{% endblock %}
+{% block content %}
+{% load static %}
+
+<a href="/database/browse">所有人員</a>
+<a href="/database/browse/pi">PI</a>
+<a href="/database/browse/staff">助理</a>
+<a href="/database/browse/card">門禁卡</a>
+
+<hr>
+
+
+<table id="staff_table" class="display compact" style="width:100%">
+  <thead>
+    <tr>
+      <th>姓名</th>
+      <!-- staff 1-9 -->
+      <th>人事資料卡PI</th>
+      <th>門禁卡PI</th>
+      <th>細胞室</th>
+      <th>細胞室使用日期</th>
+      <th>細胞室停用日期</th>
+      <th>共研講習日期</th>
+      <th>生安教育訓練日期</th>
+      <th>離職日期</th>
+      <th>人事資料卡</th>
+      <!-- person 10-19 -->
+      <th>分機</th>
+      <th>簡碼</th>
+      <th>手機</th>
+      <th>信箱</th>
+      <th>職稱</th>
+      <th>單位</th>
+      <th>員工編號</th>
+      <th>領用門禁卡</th>
+      <th>共研</th>
+      <th>離職</th>
+      <th>類別</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    {% for p in staff_list %}
+    <tr>
+        <!-- <td><a href="{{ p.get_absolute_url }}">{{p.uid}}</a></td> -->
+      {% if p.uid.leave == True%}
+        <td><a href="{{ p.get_absolute_url }}">{{p.uid}}</a> (離)</td>
+      {% else %}
+        <td><a href="{{ p.get_absolute_url }}">{{p.uid}}</a></td>
+      {% endif %}
+
+      <!-- staff -->
+      <td><a href="{{ p.info.get_absolute_url }}">{{p.info.uid}}</a></td>
+      <td><a href="{{ p.card.get_absolute_url }}">{{p.card.uid}}</a></td>
+      <td>{{p.culture_room}}</td>
+      <td>{{p.culture_room_start}}</td>
+      <td>{{p.culture_room_end}}</td>
+      <td>{{p.EHS_training_date}}</td>
+      <td>{{p.security_training_date}}</td>
+      <td>{{p.leave_date}}</td>
+      <td>{{p.info_card}}</td>
+      <!-- person -->
+      <td>{{p.uid.extension}}</td>
+      <td>{{p.uid.number}}</td>
+      <td>{{p.uid.phone}}</td>
+      <td>{{p.uid.mail}}</td>
+      <td>{{p.uid.job_title}}</td>
+      <td>{{p.uid.organization}}</td>
+      <td>{{p.uid.employee_ID}}</td>
+      <td>{{p.uid.access_card}}</td>
+      <td>{{p.uid.core_lab}}</td>
+      <td>{{p.uid.leave}}</td>
+      <td>{{p.uid.role}}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+  <tfoot>
+    <tr>
+      <th>姓名</th>
+      <!-- staff 1-9 -->
+      <th>人事資料卡PI</th>
+      <th>門禁卡PI</th>
+      <th>細胞室</th>
+      <th>細胞室使用日期</th>
+      <th>細胞室停用日期</th>
+      <th>共研講習日期</th>
+      <th>生安教育訓練日期</th>
+      <th>離職日期</th>
+      <th>人事資料卡</th>
+      <!-- person 10-19 -->
+      <th>分機</th>
+      <th>簡碼</th>
+      <th>手機</th>
+      <th>信箱</th>
+      <th>職稱</th>
+      <th>單位</th>
+      <th>員工編號</th>
+      <th>領用門禁卡</th>
+      <th>共研</th>
+      <th>離職</th>
+      <th>類別</th>
+    </tr>
+  </tfoot>
+</table>
+
+
+
+
+{% endblock %}

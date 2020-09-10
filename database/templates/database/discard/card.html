@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block title %} core lab-card {% endblock %}
+{% block content %}
+<a href="/browse">Person</a>
+<a href="/pi">PIs</a>
+<a href="/staff">Staffs</a>
+<a href="/card">Cards</a>
+<hr>
+<table>
+  <tr>
+    <td>姓名</td>
+    <td>領卡日期</td>
+    <td>收據號碼</td>
+    <td>門禁卡卡號</td>
+    <td>密碼</td>
+    <td>退卡日期</td>
+  </tr>
+  {% for p in card_list%}
+  <tr>
+    <td>{{p.uid}}</td>
+    <td>{{p.receive}}</td>
+    <td>{{p.receipt}}</td>
+    <td>{{p.card_ID}}</td>
+    <td>{{p.password}}</td>
+    <td>{{p.card_return_date}}</td>
+  </tr>
+  {% endfor %}
+</table>
+
+{% endblock %}

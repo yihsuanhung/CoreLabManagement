@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block title %}
+detail | 共研
+{% endblock %}
+
+
+{% block content %}
+<form>
+  <input type="button" value="Back" onclick="history.back()">
+  <input type="button" value="Edit" onclick="">
+  <input type="button" value="Delete" onclick="">
+</form>
+
+<h1>{{detail_people.name}}</h1>
+
+<p>分機: {{detail_people.extension}}</p>
+<p>手機: {{detail_people.number}}</p>
+<p>簡碼: {{detail_people.phone}}</p>
+<p>主要信箱: {{detail_people.mail}}</p>
+<p>次要信箱: {{detail_people.alt_mail}}</p>
+<p>職稱: {{detail_people.job_title}}</p>
+<p>單位: {{detail_people.organization}}</p>
+<p>員工編號: {{detail_people.employee_ID}}</p>
+<p>Role: {{detail_people.role}}</p>
+
+<hr>
+
+<p>常駐: {{detail_staff.permanent}}</p>
+<p>人事資料卡PI: {{pi_name}}</p>
+<p>門禁卡PI: {{card_pi_name}}</p>
+<p>細胞室: {{detail_staff.culture_room}}</p>
+<p>細胞室使用日期: {{detail_staff.culture_room_start}}</p>
+<p>細胞室停用日期: {{detail_staff.culture_room_end}}</p>
+<p>安衛教育訓練: {{detail_staff.EHS_training}}</p>
+<p>生安教育訓練: {{detail_staff.security_training}}</p>
+<p>離職: {{detail_staff.leave}}</p>
+
+<hr>
+
+<p>領卡日期: {{detail_card.receive}}</p>
+<p>收據號碼: {{detail_card.receipt}}</p>
+<p>門禁卡卡號: {{detail_card.card_ID}}</p>
+<p>密碼: {{detail_card.password}}</p>
+<p>退卡日期: {{detail_card.card_return_date}}</p>
+
+{% endblock %}

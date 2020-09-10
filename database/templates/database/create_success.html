@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block title %}create | 共研{% endblock %}
+
+{% block content %}
+
+
+<h1>新增完成</h1>
+檢視
+<br><br>
+新增其他欄位:
+<br>
+<a href="/database/create_pi">PI</a>
+<a href="/database/create_staff">助理</a>
+<a href="/database/create_card">門禁卡</a>
+
+{{uid}}
+
+<!-- <form method="post">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <input type="submit" value="新增" />
+</form> -->
+{% endblock %}

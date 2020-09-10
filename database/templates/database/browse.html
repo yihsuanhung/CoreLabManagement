@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+
+{% block title %}browse | 共研{% endblock %}
+{% block content %}
+{% load static %}
+<a href="/database/browse">所有人員</a>
+<a href="/database/browse/pi">PI</a>
+<a href="/database/browse/staff">助理</a>
+<a href="/database/browse/card">門禁卡</a>
+
+<hr>
+
+<!-- <form action="/database/browse" method="GET">
+  <input class="search_bar" type="text" name="q"/>
+  <input class="search_button" type="submit" name="" value="Search"/>
+</form> -->
+
+<!-- {% if person_list is not None %} -->
+<table id="person_table" class="display compact" style="width:100%">
+  <thead>
+    <tr>
+      <th>姓名</th>
+      <th>分機</th>
+      <th>簡碼</th>
+      <th>手機</th>
+      <th>信箱</th>
+      <th>職稱</th>
+      <th>單位</th>
+      <th>員工編號</th>
+      <th>領用門禁卡</th>
+      <th>共研</th>
+      <th>離職</th>
+      <th>類別</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    {% for p in person_list %}
+    <tr>
+
+      {% if p.leave == True%}
+        <td><a href="{{ p.get_absolute_url }}">{{p.name}}</a> (離)</td>
+      {% else %}
+        <td><a href="{{ p.get_absolute_url }}">{{p.name}}</a></td>
+      {% endif %}
+
+      <td>{{p.extension}}</td>
+      <td>{{p.number}}</td>
+      <td>{{p.phone}}</td>
+      <td>{{p.mail}}</td>
+      <td>{{p.job_title}}</td>
+      <td>{{p.organization}}</td>
+      <td>{{p.employee_ID}}</td>
+      <td>{{p.access_card}}</td>
+      <td>{{p.core_lab}}</td>
+      <td>{{p.leave}}</td>
+      <td>{{p.role}}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+
+  <tfoot>
+    <tr>
+      <th>姓名</th>
+      <th>分機</th>
+      <th>簡碼</th>
+      <th>手機</th>
+      <th>信箱</th>
+      <th>職稱</th>
+      <th>單位</th>
+      <th>員工編號</th>
+      <th>領用門禁卡</th>
+      <th>共研</th>
+      <th>離職</th>
+      <th>類別</th>
+    </tr>
+  </tfoot>
+</table>
+
+<!-- {% else %}
+找不到內容
+{% endif %} -->
+
+
+
+
+{% endblock %}
